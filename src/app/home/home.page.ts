@@ -8,24 +8,28 @@ declare var google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, AfterContentInit {
+ 
   map;
   @ViewChild('mapElement', { static: true }) mapElement: ElementRef;
 
   dateTime;
+  pstatus = true;
+  dstatus = true;
+  rstatus = true;
+  switchstatus = false;
+  power = "Switch off";
+  powercolor = "danger";
+  kilometer = "0";
+  rightbar = true;
 
   pin : any = "";
 
   constructor(private http : HttpClient) {
-    setInterval(() => {
-      this.http.get('http://localhost:5000/dataget').subscribe((response) => {
-        console.log(response["10"]["state"]);
-        this.pin = "/"+response["10"]["state"]+"/off";
-      
-   //     this.pin = response["params"];
-
-      }); 
-    }, 5000);
         
+  }
+
+  ngOnInit() {
+    this.dateTime = new Date().toISOString();
   }
 
   ngAfterContentInit(): void {
@@ -38,10 +42,73 @@ export class HomePage implements OnInit, AfterContentInit {
         });
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.dateTime = new Date().toISOString();
-    });
+
+  
+  pbutton()
+  {
+    this.pstatus = true;
+    this.dstatus = false;
+    this.rstatus = false;
+    this.switchstatus = false;
+    this.http.get('http://localhost:5000/dataget').subscribe((response) => {
+      console.log(response);
+    }); 
+  }
+
+  rbutton()
+  {
+    this.pstatus = false;
+    this.dstatus = true;
+    this.rstatus = true;
+    this.switchstatus = true;
+    this.http.get('http://localhost:5000/dataget').subscribe((response) => {
+      console.log(response);
+    }); 
+  }
+  dbutton()
+  {
+    this.kilometer = "239";
+    this.pstatus = false;
+    this.dstatus = true;
+    this.rstatus = true;
+    this.switchstatus = true;
+    this.http.get('http://localhost:5000/dataget').subscribe((response) => {
+      console.log(response);
+    }); 
+  }
+
+  switchbutton()
+  {
+
+    this.kilometer = "10";
+
+    if( this.power == "Switch off")
+    {
+      this.pstatus = true;
+      this.dstatus = false;
+      this.rstatus = true;
+      this.switchstatus = true;
+      this.power = "Switch on";
+      this.powercolor = "success";
+
+    }
+    else if(this.power == "Switch on"){
+      this.pstatus = true;
+      this.dstatus = true;
+      this.rstatus = true;
+      this.switchstatus = false;
+      this.power = "Switch off";
+      this.powercolor = "danger";
+    }
+    this.http.get('http://localhost:5000/dataget').subscribe((response) => {
+      console.log(response);
+    }); 
+  }
+
+
+  right_bar_fun()
+  {
+    this.rightbar = this.rightbar == true ? false : true;
   }
 
   

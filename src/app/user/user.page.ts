@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
-
+  dateTime
   constructor() { }
 
   ngOnInit() {
+    this.dateTime = new Date().toISOString();
   }
 
 }

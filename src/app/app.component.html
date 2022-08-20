@@ -1,3 +1,21 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
+
+
+<ion-menu side="start" menuId="custom" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>Ozone Motors</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item style="color:var(--ion-color-primary, #3880ff);font-weight: bold;" [routerLink]="['/home']">HOME</ion-item>
+      <ion-item style="color:var(--ion-color-primary, #3880ff);font-weight: bold;" [routerLink]="['/vehicle']">VEHICLE</ion-item>
+      <ion-item style="color:var(--ion-color-primary, #3880ff);font-weight: bold;" [routerLink]="['/settings']">SETTINGS</ion-item>
+      <ion-item style="color:var(--ion-color-primary, #3880ff);font-weight: bold;" [routerLink]="['/user']">USER</ion-item>
+      <ion-item style="color:var(--ion-color-danger, #eb445a) !important;font-weight: bold;" >TEST MODE</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+
+<ion-router-outlet main></ion-router-outlet>

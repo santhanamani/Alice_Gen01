@@ -1,7 +1,8 @@
-
-<!--------------- Header - Common for all pages ------------------->
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button>
         <ion-icon name="mic-outline"></ion-icon>
@@ -9,137 +10,100 @@
       <ion-button>
         <ion-icon name="cellular-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/user']">
-        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      <ion-button>
+        <label>93%</label><ion-icon name="battery-charging"></ion-icon>
       </ion-button>
+      <ion-button [routerLink]="['/user']">
+       <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+  
     </ion-buttons>
     <ion-buttons slot="secondary">
       <ion-button>
         <ion-datetime [value]="dateTime"></ion-datetime>
       </ion-button>
-      <ion-button>
-        <ion-text> 23 Deg C</ion-text>
-      </ion-button>
       <ion-button> 
-        <ion-icon name="cloudy-outline"></ion-icon> 
+        <label>23 Deg C</label><ion-icon name="cloudy-outline"></ion-icon> 
       </ion-button>
 
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-
-  <!--------------- Navigation for home page ------------------->
+<ion-content >
   <div #mapElement id="gmap" style="height:100%;"></div>
+   
 
-  <!--------------- Overlay content - Home page ------------------->
-  <div id="container">
-    <ion-grid style="padding-top: 3%;">
+  <ion-card *ngIf="!rightbar" class="transparent-card" style="position: absolute;top: 0px;right: 0px;padding-bottom: 0px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
+    <ion-row class="ion-text-left">
+      <ion-col size="12">
+    <ion-icon (click)="right_bar_fun()" style="font-size: 4vh;" name="options" ></ion-icon>
+    </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card class="transparent-card" style="width: 25%;position: absolute;top: 0px;left: 0px;padding-bottom: 0px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
+    <ion-row>
+      <ion-col class="ion-text-left" style="padding-bottom: 0px;">
+        <ion-text style="font-weight: 400;font-size: 15px; color: grey;"> NAVIGATION</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-left">
+        <ion-searchbar style="padding-top: 0px;padding-bottom: 0px;" showCancelButton="always"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+
+   <ion-card *ngIf="rightbar" class="transparent-card" style="width: 25%;position:absolute;top:0px;right:0px;padding-bottom: 0px;padding-top: 0px;">
+
+    <ion-icon (click)="right_bar_fun()" style="font-size: 6vh;position:absolute;top:0px;right:0px;" name="close"></ion-icon>
+
+    <ion-row class="ion-text-left">
+     <ion-col size="10">
       <ion-row>
-
-        <!--------------- Navigation controls ------------------->
-        <ion-col size="8">
-          <ion-card class="transparent-card">
-            <ion-row>
-              <ion-col class="ion-text-left">
-                <ion-text style="font-weight: 400;font-size: 18px; color: grey;"> NAVIGATION</ion-text>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="ion-text-left">
-                <ion-searchbar showCancelButton="always"></ion-searchbar>
-              </ion-col>
-            </ion-row>
-          </ion-card>
+        <ion-col size="12">
+          <ion-text style="font-weight: 500;font-size: 24px">90 km</ion-text> 
         </ion-col>
-
-        <!--------------- Drive controls & Information ------------------->
-        <ion-col size="4" >
-          <ion-card class="transparent-card">
-
-            <!--------------- Battery information ------------------->
-            <ion-row>
-              <ion-col class="ion-text-left">
-                <ion-text style="font-weight: 400;font-size: 18px; color: grey;"> BATTERY</ion-text>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="ion-text-right">
-                <ion-text style="font-weight: 300;font-size: 18px;line-height: 150%;" > 90%</ion-text>
-                <ion-progress-bar value="0.9" color="success"></ion-progress-bar><br>
-              </ion-col>
-            </ion-row>
-            <ion-row class="ion-text-left">
-              <ion-col>
-                <ion-text style="font-weight: 500;font-size: 24px">129 km</ion-text> <br>
-                <ion-text style="font-weight: 300;font-size: 12px">Estimated range</ion-text>
-              </ion-col>
-            </ion-row>
-
-            <!--------------- Drive & vehicle controls ------------------->
-            <!-----Break -----> <br><br>
-            <ion-row>
-              <ion-col class="ion-text-left">
-                <ion-text style="font-weight: 400;font-size: 18px; color: grey;"> DRIVE</ion-text>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col style="padding-top: 8%; padding-bottom: 8%;" class="ion-text-center">
-                <ion-text style="font-weight: 500;font-size: 50px"> 23</ion-text>
-                <ion-text style="font-weight: 500;font-size: 24px" > km/h </ion-text>
-              </ion-col>
-            </ion-row>
-            <!-----Break -----> <br>
-            <ion-row>
-              <ion-col>
-                <ion-button [routerLink]="[pin]" size="large" expand="block" disabled="false"> P </ion-button>
-                
-              </ion-col>
-              <ion-col>
-                <ion-button [routerLink]="['{{pin}}/on']" size="large" expand="block" disabled="false"> D </ion-button>
-                
-              </ion-col>
-              <ion-col>
-                <ion-button size="large" expand="block" disabled="true"> R </ion-button>
-              </ion-col>
-            </ion-row>
-            <!-----Break -----> <br>
-            <ion-row style="margin-top: 10%;">
-              <ion-col>
-                <ion-button size="large" expand="block" fill="solid" color="danger"> Switch on </ion-button>
-              </ion-col>
-            </ion-row>
-
-          </ion-card>
-
+        <ion-col size="12">
+          <ion-text style="font-weight: 300;font-size: 12px">Estimated range</ion-text>
         </ion-col>
-        
       </ion-row>
-    </ion-grid>
-   </div>
+     </ion-col> 
+    </ion-row>
 
 
+    <ion-row>
+      <ion-col class="ion-text-left">
+        <ion-text style="font-weight: 400;font-size: 18px; color: grey;"> DRIVE</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="padding-top: 2%; padding-bottom: 2%;" class="ion-text-center">
+        <ion-text style="font-weight: 500;font-size: 50px"> 23</ion-text>
+        <ion-text style="font-weight: 500;font-size: 24px" > km/h </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="pbutton()"  size="medium" expand="block" [disabled]="pstatus"> P </ion-button>
+        
+      </ion-col>
+      <ion-col>
+        <ion-button  (click)="dbutton()" size="medium" expand="block" [disabled]="dstatus"> D </ion-button>
+        
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="rbutton()" size="medium" expand="block" [disabled]="rstatus"> R </ion-button>
+      </ion-col>
+    </ion-row>
+    <!-----Break -----> 
+    <ion-row >
+      <ion-col>
+        <ion-button (click)="switchbutton()" size="medium" expand="block" fill="solid" [color]="powercolor" [disabled]="switchstatus"> {{power}} </ion-button>
+      </ion-col>
+    </ion-row>
+ 
+
+  </ion-card>
 </ion-content>
-
-<!------------------------------------------------------- Alice - Footer - Landscape------------------------------------------------------->
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button fill="clear" slot="end" size="large" color="danger">
-      TEST MODE
-    </ion-button>
-    <ion-button [routerLink]="['/user']" fill="clear" slot="end" size="large">
-      USER
-    </ion-button>
-    <ion-button [routerLink]="['/settings']"fill="clear" slot="end" size="large">
-      SETTINGS
-    </ion-button>
-    <ion-button  [routerLink]="['/vehicle']" fill="clear" slot="end" size="large">
-      VEHICLE
-    </ion-button>
-    <ion-button [routerLink]="['/']" fill="clear" slot="end" size="large">
-      HOME
-    </ion-button>
-  </ion-toolbar>
-</ion-footer>

@@ -1,38 +1,11 @@
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba($color: #000000, $alpha: 0.5);
-}
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #ffffff;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-
-.transparent-card{
-  background-color:rgba($color: #000000, $alpha: 0.9);
-  padding: 3%;
-}
-.overlay-card{
-
-  background-color:rgba($color: #000000, $alpha: 0.9);
   
-}
+  .transparent-card{
+    background-color:rgba($color: #000000, $alpha: 0.9);
+    padding: 3%;
+  }
+  .overlay-card{
+  
+    background-color:rgba($color: #000000, $alpha: 0.9);
+    
+  }
